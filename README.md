@@ -1,7 +1,3 @@
-Certainly! Here's a **comprehensive README.md** template tailored for your **Proxmox VE 8.3.5 Automated Post-Install Script Suite**, following best practices inspired by GitHub community guides [[github.com](https://github.com/Tinymrsb/READMEhowto)], organized for clarity, and geared to get your users up and running quickly.
-
----
-
 # Proxmox 8.3.5 Automated Post-Install Script Suite
 
 ---
