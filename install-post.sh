@@ -47,13 +47,15 @@ deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
 EOF
 fi
 
-## Remove subscription nag on PVE 8
+## Remove subscription nag the clean way (PVE 8+)
 if [[ "$XS_NOSUBBANNER" == "yes" ]]; then
-cat >/etc/apt/apt.conf.d/xs-no-nag <<'EOF'
-DPkg::Post-Invoke { "if [ -f /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js ]; then
-sed -i 's/data.status\ !==\ 'Active'/false/' /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js; fi"; };
-EOF
-apt --reinstall install proxmox-widget-toolkit -y || true
+  apt-get install --reinstall -y proxmox-widget-toolkit
+  
+  JS="/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js"
+  [ -f "$JS" ] && cp -f "$JS" "${JS}.bak.$(date +%s)"
+  sed -i "s/data.status !== 'Active'/false/g" "$JS"
+  
+  echo "Proxmox subscription nag patched successfully ✅"
 fi
 
 ## Upgrade apt
